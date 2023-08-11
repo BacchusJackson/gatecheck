@@ -31,7 +31,8 @@ const ExitSystemFail int = -1
 const ExitOk int = 0
 const ExitFileAccessFail int = 2
 const ExitValidationFail = 1
-const GatecheckVersion = "v0.1.4-pre"
+// bump: const GatecheckVersion = "{0}"
+const GatecheckVersion = "v0.1.3"
 
 func main() {
 	viper.SetConfigType("env")
@@ -170,3 +171,4 @@ func PipeInput() bool {
 	fileInfo, _ := os.Stdin.Stat()
 	return fileInfo.Mode()&os.ModeCharDevice == 0
 }
+
