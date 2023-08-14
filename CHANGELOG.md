@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [0.0.1-test] - 2023-08-13
+
 ### Fixed
 
 - Bug where Gitleaks report with no secrets aren't properly decoded
