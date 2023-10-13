@@ -245,13 +245,11 @@ func (s Service) engagement(e EngagementQuery, prod product) (engagement, error)
 		return engagement{}, err
 	}
 
-	loc, _ := time.LoadLocation("EST")
-
 	buf := new(bytes.Buffer)
 	newEngagement := &engagement{
 		Name: e.Name, Description: s.description(),
-		TargetStart: time.Now().In(loc).Format("2006-01-02"),
-		TargetEnd:   time.Now().In(loc).Add(e.Duration).Format("2006-01-02"),
+		TargetStart: time.Now().Format("2006-01-02"),
+		TargetEnd:   time.Now().Add(e.Duration).Format("2006-01-02"),
 		Product:     prod.ID, Active: true, Status: "In Progress", EngagementType: "CI/CD", CommitHash: e.CommitHash,
 		BranchTag: e.BranchTag, SourceCodeManagementURI: e.SourceURL,
 		Tags: e.Tags,
