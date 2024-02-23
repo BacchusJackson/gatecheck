@@ -8,6 +8,7 @@ import (
 	"log/slog"
 	"strings"
 
+	"github.com/gatecheckdev/gatecheck/pkg/archive"
 	"github.com/gatecheckdev/gatecheck/pkg/artifacts/cyclonedx"
 	"github.com/gatecheckdev/gatecheck/pkg/artifacts/gitleaks"
 	"github.com/gatecheckdev/gatecheck/pkg/artifacts/grype"
@@ -48,9 +49,11 @@ func List(dst io.Writer, src io.Reader, inputFilename string) error {
 
 	case strings.Contains(inputFilename, "bundle"):
 		slog.Debug("list", "filename", inputFilename, "filetype", "bundle")
-		slog.Warn("gatecheck bundle decoder is not supported yet")
-		return nil
-
+		bundle, err := archive.NewBundleDecoder().DecodeFrom(src)
+		if err != nil {
+			return err
+		}
+		return archive.NewBundleEncoder(dst).Encode(bundle.(*archive.Bundle))
 	default:
 		slog.Error("invalid input filetype", "filename", inputFilename)
 		return errors.New("failed to list artifact content")
